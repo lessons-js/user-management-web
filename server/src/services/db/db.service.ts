@@ -22,14 +22,13 @@ function returnLastItem(arr) {
 function addUser(user) {
     const users = getFile(urlToSave);
     const lastItem = returnLastItem(users);
-    user.id = lastItem ? user.id = lastItem.id + 1 || user.id : 1;
     
     users.forEach(e => {
         if(e.name === user.name) {
            throw('пользователь с такими данными уже зарегестрирован');
         }
     });
-    users.push(user);
+    users.push({id: lastItem ? lastItem.id + 1 : 1, ...user});
     saveFile(urlToSave, users)
 }
 
