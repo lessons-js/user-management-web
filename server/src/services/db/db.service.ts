@@ -33,5 +33,9 @@ function addUser(user) {
     saveFile(urlToSave, users)
 }
 
+function getUsers(file) {
+    return getFile(file);
+}
 
-addUser({"name" : "radik"})
+// addUser({"name" : "radik"})
+console.log(getUsers(urlToSave))
