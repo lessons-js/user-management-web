@@ -1,3 +1,4 @@
+import exp from 'constants';
 import { response } from 'express';
 import { json } from 'node:stream/consumers';
 
@@ -9,8 +10,8 @@ function getFile(file) {
     return JSON.parse(fs.readFileSync(file));  
 }
 
-function saveFile(urlToSave, file) {
-    if (!file || !urlToSave) {
+function saveFile(file) {
+    if (!file) {
         throw('Cant save file');
     } 
     fs.writeFile(urlToSave, JSON.stringify(file, null, 2))
@@ -25,16 +26,26 @@ function addUser(user) {
     
     users.forEach(e => {
         if(e.name === user.name) {
-           throw('пользователь с такими данными уже зарегестрирован');
+        throw('пользователь с такими данными уже зарегестрирован');
         }
     });
     users.push({id: lastItem ? lastItem.id + 1 : 1, ...user});
-    saveFile(urlToSave, users)
+    saveFile(users)
 }
 
-function getUsers(file) {
-    return getFile(file);
+function getUsers() {
+    return getFile(urlToSave);
 }
 
-// addUser({"name" : "radik"})
-console.log(getUsers(urlToSave))
+function updateUsers(userId, update) {
+    const users = getFile(urlToSave);
+    users.forEach(user => {
+        if(user.id === userId) {
+            const index = users.indexOf(user, 0);
+            users[index] = {...user, ...update}
+        }
+    })
+    saveFile(users)
+
+}
+updateUsers(1, {"name" : 'San9'})
