@@ -48,4 +48,15 @@ function updateUsers(userId, update) {
     saveFile(users)
 
 }
-updateUsers(1, {"name" : 'San9'})
+
+function deleteUser(user) {
+    const users = getUsers();
+    users.forEach(e => {
+        if(user.id === e.id) {
+            const index = users.indexOf(e, 0);
+            users.splice(index, index)
+        }
+    })
+    saveFile(users)
+}
+deleteUser({"id" : 2})
