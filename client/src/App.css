@@ -12,5 +12,5 @@
 }
 
 .operator-btn:disabled {
-  background-color: grey;
+  background-color: red;
 }
