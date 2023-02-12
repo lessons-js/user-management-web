@@ -7,7 +7,7 @@ const Router = () => (
     <Header />
     <Routes>
     <Route path="/users" element={<Users />} />
-    <Route path="/" element={<Navigate replace to="/users" />} />    </Routes>    <Routes>
+    <Route path="/" element={<Navigate replace to="/users" />} /> 
     </Routes>
   </BrowserRouter>
 );
