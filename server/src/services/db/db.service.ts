@@ -1,62 +1,86 @@
-import exp from 'constants';
-import { response } from 'express';
-import { json } from 'node:stream/consumers';
+import * as fs  from 'fs';
 
 const urlToSave = './src/services/db/users.json';
-const fs = require('file-system');
 
+function init() {
+    const fileExists = fs.existsSync(urlToSave);
+    if (!fileExists) {
+        fs.writeFile(urlToSave, '[]', function (err) {
+            if (err) console.error('file users don`t created');
+        });
+    }
+}
+
+init()
+
+function userExists (user) {
+    const users = getFile(urlToSave);
+    const phone = new Set();
+    const emal = new Set();
+
+    users.forEach(user => {
+        phone.add(user.phone)
+        emal.add(user.emal)
+    })
+
+    return phone.has(user.phone) || emal.has(user.emal)
+}
 
 function getFile(file) {
-    return JSON.parse(fs.readFileSync(file));  
+    return JSON.parse(fs.readFileSync(file, {encoding: 'utf-8'}));  
 }
 
 function saveFile(file) {
     if (!file) {
         throw('Cant save file');
     } 
-    fs.writeFile(urlToSave, JSON.stringify(file, null, 2))
+    fs.writeFile(urlToSave, JSON.stringify(file, null), (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+      })
 }
 function returnLastItem(arr) {
     return arr[arr.length - 1];
 }
 
-function addUser(user) {
+export function addUser(user) {
     const users = getFile(urlToSave);
     const lastItem = returnLastItem(users);
-    
-    users.forEach(e => {
-        if(e.name === user.name) {
+    if(userExists(user)) {
         throw('пользователь с такими данными уже зарегестрирован');
-        }
-    });
+    }
+ 
     users.push({id: lastItem ? lastItem.id + 1 : 1, ...user});
     saveFile(users)
+    return userExists(user)
 }
 
-function getUsers() {
+export function getUsers() {
     return getFile(urlToSave);
 }
 
-function updateUsers(userId, update) {
+export function updateUsers(userId, update) {
     const users = getFile(urlToSave);
     users.forEach(user => {
         if(user.id === userId) {
-            const index = users.indexOf(user, 0);
+            const index = users.indexOf(user, users.indexOf(user));
             users[index] = {...user, ...update}
         }
     })
+    
     saveFile(users)
 
 }
 
-function deleteUser(user) {
+export function deleteUser(user) {
     const users = getUsers();
     users.forEach(e => {
         if(user.id === e.id) {
-            const index = users.indexOf(e, 0);
+            const index = users.indexOf(e, users.indexOf(e));
             users.splice(index, index)
         }
     })
+
     saveFile(users)
+    return userExists(user)
 }
-deleteUser({"id" : 2})
