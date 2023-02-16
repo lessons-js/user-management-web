@@ -1,4 +1,5 @@
-import {GetUsers} from './api/GetUsers';
+import {PostUsers} from './api/PostUsers';
+//import {GetUsers} from './api/GetUsers';
 import './App.css';
 
 
@@ -10,7 +11,7 @@ function App() {
         <p>
           Test
         </p>
-        <GetUsers/>
+        <PostUsers/>
       </header>
     </div>
   )
