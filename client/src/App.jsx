@@ -1,6 +1,19 @@
-import Router from './routing/Router';
+import {GetUsers} from './api/GetUsers';
 import './App.css';
 
-const App = () => <Router />;
+
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <p>
+          Test
+        </p>
+        <GetUsers/>
+      </header>
+    </div>
+  )
+};
 
 export default App;
