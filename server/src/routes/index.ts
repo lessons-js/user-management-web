@@ -1,5 +1,5 @@
 import express from "express";
-import { users, create, update, deleteUserById } from "./UserController";
+import { users, create, update, deleteUserById } from "../middlewares/userMiddleware";
 import "../services/db/db.service";
 
 const routes = express.Router();
