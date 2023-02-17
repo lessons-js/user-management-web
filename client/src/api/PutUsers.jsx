@@ -13,6 +13,20 @@ function putUser(users, id, changeParam) {
     return str;
 }
 
+function retFunc(users){
+  return (
+    <>
+      {
+      users?.map(h => <p key={h.id}> 
+      [id] - {h.id}
+      [name] - {h.userName}
+      [email] - {h.email}
+      [phoneNumber] - {h.phoneNumber}</p>)
+    }
+    </>
+  )
+}
+
 export const PutUsers = () => {
     const [users, setUsers] = useState([]);
   
@@ -29,9 +43,21 @@ export const PutUsers = () => {
       .then(data => {
         newArr = putUser(data.result, 2, 'Alex');
         setUsers(newArr);
+       // console.log(makeArrObj(users));
       })
     },[]);
   return (
+     retFunc(users)
+
+  )
+  }
+
+
+
+
+
+  /*
+    return (
     <>
       {
       users?.map(h => <p key={h.id}> 
@@ -43,3 +69,4 @@ export const PutUsers = () => {
     </>
   )
   }
+  */
