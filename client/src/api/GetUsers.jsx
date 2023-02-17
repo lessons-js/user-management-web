@@ -14,7 +14,11 @@ export const GetUsers = () => {
   return (
     <>
       {
-      users?.map(h => <p key={h.userName}> [id] - {h.id}      [name] - {h.userName}     [email] - {h.email}       [phoneNumber] - {h.phoneNumber}</p>)
+      users?.map(h => <p key={h.userName}> 
+      [id] - {h.id}      
+      [name] - {h.userName}     
+      [email] - {h.email}       
+      [phoneNumber] - {h.phoneNumber}</p>)
     }
     </>
   )
