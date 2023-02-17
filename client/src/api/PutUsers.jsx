@@ -51,22 +51,3 @@ export const PutUsers = () => {
 
   )
   }
-
-
-
-
-
-  /*
-    return (
-    <>
-      {
-      users?.map(h => <p key={h.id}> 
-      [id] - {h.id}
-      [name] - {h.userName}
-      [email] - {h.email}
-      [phoneNumber] - {h.phoneNumber}</p>)
-    }
-    </>
-  )
-  }
-  */
