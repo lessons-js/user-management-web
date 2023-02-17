@@ -1,20 +1,24 @@
 import {useEffect, useState} from 'react'
 
-const newUser  = {
-    id: 4,
-    userName: 'Orion',
-    email: 'Orion@ukr.net',
-    phoneNumber: '+380935954144'
+
+
+function delUser(users, id) {
+  let str = [];
+
+  for(const a of users) {
+    if (a.id !== id)
+      str.push(a);
   }
+  return str;
+}
 
-
-export const PostUsers = () => {
+export const DeleteUsers = () => {
     const [users, setUsers] = useState([]);
   
-    useEffect(() => {    
-        let str = [];
+    useEffect(() => {
+        let newArr = [];
       fetch('http://localhost:3001/users',{
-        method: 'POST',
+        method: 'DELETE',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json'
@@ -22,11 +26,8 @@ export const PostUsers = () => {
       })
       .then(res => res.json())
       .then(data => {
-        for(const a of data.result) {
-            str.push(a);
-        }
-        str.push(newUser);
-        setUsers(str);
+        newArr = delUser(data.result, 2) // 2 is id user which we want to del
+        setUsers(newArr);
       })
     },[]);
   return (
