@@ -1,86 +1,80 @@
 import * as fs  from 'fs';
 
-const urlToSave = './src/services/db/users.json';
+export class DB {
+    data;
+    uniqueIndexes: any = {};
+  
+    constructor(name, options) {
+      options.unique.forEach(element => {
+        this.uniqueIndexes[element] = new Set();
+      });
 
-function init() {
-    const fileExists = fs.existsSync(urlToSave);
-    if (!fileExists) {
-        fs.writeFile(urlToSave, '[]', function (err) {
-            if (err) console.error('file users don`t created');
-        });
+      this.data = JSON.parse(fs.readFileSync((`${name}.json`), {encoding: 'utf-8'}));
+  
+      this.data.forEach(user => {
+        options.unique.forEach(field => {
+          if (user[field]) {
+            this.uniqueIndexes[field].add(user[field])
+          }
+        })
+      });
     }
-}
 
-init()
-
-function userExists (user) {
-    const users = getFile(urlToSave);
-    const phone = new Set();
-    const emal = new Set();
-
-    users.forEach(user => {
-        phone.add(user.phone)
-        emal.add(user.emal)
-    })
-
-    return phone.has(user.phone) || emal.has(user.emal)
-}
-
-function getFile(file) {
-    return JSON.parse(fs.readFileSync(file, {encoding: 'utf-8'}));  
-}
-
-function saveFile(file) {
-    if (!file) {
-        throw('Cant save file');
-    } 
-    fs.writeFile(urlToSave, JSON.stringify(file, null), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-      })
-}
-function returnLastItem(arr) {
-    return arr[arr.length - 1];
-}
-
-export function addUser(user) {
-    const users = getFile(urlToSave);
-    const lastItem = returnLastItem(users);
-    if(userExists(user)) {
-        throw('пользователь с такими данными уже зарегестрирован');
+    getUsers() {
+       return this.data
     }
- 
-    users.push({id: lastItem ? lastItem.id + 1 : 1, ...user});
-    saveFile(users)
-    return userExists(user)
-}
 
-export function getUsers() {
-    return getFile(urlToSave);
-}
 
-export function updateUsers(userId, update) {
-    const users = getFile(urlToSave);
-    users.forEach(user => {
-        if(user.id === userId) {
-            const index = users.indexOf(user, users.indexOf(user));
-            users[index] = {...user, ...update}
+    saveFile(file) {
+        if (!file) {
+            throw('Cant save file');
+        } 
+        fs.writeFileSync('./users.json', JSON.stringify(file, null))
+    }
+
+    returnLastItem(arr) {
+        return arr[arr.length - 1];
+    }
+
+    addItem(item) {
+        const lastItem = this.returnLastItem(this.data);
+        if(this.uniqueIndexes.email === item.email) {
+            throw('пользователь с такими данными уже зарегестрирован');
         }
-    })
+     
+        this.data.push({id: lastItem ? lastItem.id + 1 : 1, ...item});
+        this.saveFile(this.data)
+        return true
+    }
+
+    updateItem(itemId, update) {
+        this.data.forEach(item => {
+            if(item.id === itemId) {
+                const index = this.data.indexOf(item, this.data.indexOf(item));
+                this.data[index] = {...item, ...update}
+            }
+        })
+        
+        this.saveFile(this.data)
     
-    saveFile(users)
+    }
 
+    deleteItem(item) {
+        this.data.forEach(e => {
+            if(item.id === e.id) {
+                const index = this.data.indexOf(e, this.data.indexOf(e));
+                this.data.splice(index, index)
+                this.saveFile(this.data)
+                return true
+            }
+        })
+    
+        return false
+    }
+
+    
 }
-
-export function deleteUser(user) {
-    const users = getUsers();
-    users.forEach(e => {
-        if(user.id === e.id) {
-            const index = users.indexOf(e, users.indexOf(e));
-            users.splice(index, index)
-        }
-    })
-
-    saveFile(users)
-    return userExists(user)
-}
+  
+  
+new DB('users', { unique: ['email', 'phone']});
+  
