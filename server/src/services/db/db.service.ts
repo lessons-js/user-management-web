@@ -20,7 +20,7 @@ export class DB {
       });
     }
 
-    getUsers() {
+    findAll() {
        return this.data
     }
 
