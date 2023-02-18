@@ -1,13 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import Header from "../components/header";
-import Home from "../pages/home";
+import Users from "../pages/users/Users";
 
 const Router = () => (
   <BrowserRouter>
     <Header />
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
+      <Routes>
+      <Route path="/users" element={<Users />} />
+      <Route path="/" element={<Navigate replace to="/users" />} /> 
+      <Route  path='*' element={<Navigate replace to="/" />} /> 
+      </Routes>
   </BrowserRouter>
 );
 
