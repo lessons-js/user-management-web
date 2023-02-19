@@ -3,21 +3,31 @@ import * as fs  from 'fs';
 export class DB {
     data;
     uniqueIndexes: any = {};
+    dbFilePass;
   
     constructor(name, options) {
-      options.unique.forEach(element => {
-        this.uniqueIndexes[element] = new Set();
-      });
+        this.dbFilePass = `./db-data/${name}.json`;
 
-      this.data = JSON.parse(fs.readFileSync((`${name}.json`), {encoding: 'utf-8'}));
-  
-      this.data.forEach(user => {
-        options.unique.forEach(field => {
-          if (user[field]) {
-            this.uniqueIndexes[field].add(user[field])
-          }
-        })
-      });
+        const fileExists = fs.existsSync(this.dbFilePass);
+    
+        if (!fileExists) {
+            fs.writeFileSync(this.dbFilePass, '[]');
+        }
+
+        options.unique.forEach(element => {
+            this.uniqueIndexes[element] = new Set();
+        });
+
+        this.data = JSON.parse(fs.readFileSync((this.dbFilePass), {encoding: 'utf-8'}));
+    
+        this.data.forEach(user => {
+            options.unique.forEach(field => {
+            if (user[field]) {
+                this.uniqueIndexes[field].add(user[field])
+            }
+            })
+        });
+
     }
 
     findAll() {
@@ -29,7 +39,7 @@ export class DB {
         if (!file) {
             throw('Cant save file');
         } 
-        fs.writeFileSync('./users.json', JSON.stringify(file, null))
+        fs.writeFileSync(this.dbFilePass, JSON.stringify(file, null))
     }
 
     returnLastItem(arr) {
@@ -38,9 +48,13 @@ export class DB {
 
     addItem(item) {
         const lastItem = this.returnLastItem(this.data);
-        if(this.uniqueIndexes.email === item.email) {
-            throw('пользователь с такими данными уже зарегестрирован');
-        }
+    
+        Object.keys(this.uniqueIndexes).forEach(fild => {
+            console.log(this.uniqueIndexes[fild].has(item.fild))
+        })
+        // if(options.uniqueIndexes.name.has(item.email)) {
+        //     throw('пользователь с такими данными уже зарегестрирован');
+        // }
      
         this.data.push({id: lastItem ? lastItem.id + 1 : 1, ...item});
         this.saveFile(this.data)
@@ -77,4 +91,5 @@ export class DB {
   
   
 new DB('users', { unique: ['email', 'phone']});
+
   
