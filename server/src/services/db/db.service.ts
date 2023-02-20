@@ -50,11 +50,10 @@ export class DB {
         const lastItem = this.returnLastItem(this.data);
     
         Object.keys(this.uniqueIndexes).forEach(fild => {
-            console.log(this.uniqueIndexes[fild].has(item.fild))
+            if (this.uniqueIndexes[fild].has(item[fild])) {
+                throw('пользователь с такими данными уже зарегестрирован')
+            }
         })
-        // if(options.uniqueIndexes.name.has(item.email)) {
-        //     throw('пользователь с такими данными уже зарегестрирован');
-        // }
      
         this.data.push({id: lastItem ? lastItem.id + 1 : 1, ...item});
         this.saveFile(this.data)
@@ -76,6 +75,7 @@ export class DB {
     deleteItem(item) {
         this.data.forEach(e => {
             if(item.id === e.id) {
+                console.log(1)
                 const index = this.data.indexOf(e, this.data.indexOf(e));
                 this.data.splice(index, index)
                 this.saveFile(this.data)
@@ -91,5 +91,6 @@ export class DB {
   
   
 new DB('users', { unique: ['email', 'phone']});
+
 
   
