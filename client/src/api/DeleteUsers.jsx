@@ -1,6 +1,3 @@
-import {useEffect, useState} from 'react'
-
-
 
 function delUser(users, id) {
   let str = [];
@@ -12,33 +9,20 @@ function delUser(users, id) {
   return str;
 }
 
-export const DeleteUsers = () => {
-    const [users, setUsers] = useState([]);
-  
-    useEffect(() => {
-        let newArr = [];
-      fetch('http://localhost:3001/users',{
+export const DeleteUsers = () => {  
+    let newArr = [];
+ 
+    fetch(`${window.api.url}/users`,{
         method: 'DELETE',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
         },
-      })
-      .then(res => res.json())
-      .then(data => {
-        newArr = delUser(data.result, 2) // 2 is id user which we want to del
-        setUsers(newArr);
-      })
-    },[]);
-  return (
-    <>
-      {
-      users?.map(h => <p key={h.id}> 
-      [id] - {h.id}
-      [name] - {h.userName}
-      [email] - {h.email}
-      [phoneNumber] - {h.phoneNumber}</p>)
-    }
-    </>
-  )
-  }
+    })
+    .then(res => res.json())
+    .then(data => {
+    newArr = delUser(data.result, 2) // 2 is id user which we want to del
+    console.log(newArr);
+    })
+}
+  

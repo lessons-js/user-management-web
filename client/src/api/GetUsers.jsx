@@ -1,27 +1,15 @@
-import {useEffect, useState} from 'react'
 
 export const GetUsers = () => {
-    const [users, setUsers] = useState([]);
-  
-    useEffect(() => {
-      fetch('http://localhost:3001/users')
+      const arrObj = [];
+
+      fetch(`${window.api.url}/users`)
       .then(res => res.json())
       .then(data => {
-        setUsers(data.result);
-        console.log(data);
+        for(let key in data.result) {
+          arrObj.push(data.result[key]);
+        }
+        console.log(arrObj);
       })
-    },[]);
-  return (
-    <>
-      {
-      users?.map(h => <p key={h.userName}> 
-      [id] - {h.id}      
-      [name] - {h.userName}     
-      [email] - {h.email}       
-      [phoneNumber] - {h.phoneNumber}</p>)
-    }
-    </>
-  )
-  }
+}
 
 

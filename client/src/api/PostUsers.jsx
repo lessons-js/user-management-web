@@ -1,5 +1,3 @@
-import {useEffect, useState} from 'react'
-
 const newUser  = {
     id: 4,
     userName: 'Orion',
@@ -8,12 +6,17 @@ const newUser  = {
   }
 
 
+  function addUser(data, newUser,str) {
+    for(const a of data) {
+      str.push(a);
+    }
+    str.push(newUser);
+  }
+
 export const PostUsers = () => {
-    const [users, setUsers] = useState([]);
-  
-    useEffect(() => {    
-        let str = [];
-      fetch('http://localhost:3001/users',{
+    let str = [];
+
+      fetch(`${window.api.url}/users`,{
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -22,22 +25,7 @@ export const PostUsers = () => {
       })
       .then(res => res.json())
       .then(data => {
-        for(const a of data.result) {
-            str.push(a);
-        }
-        str.push(newUser);
-        setUsers(str);
+        addUser(data.result, newUser,str);
+        console.log(str);
       })
-    },[]);
-  return (
-    <>
-      {
-      users?.map(h => <p key={h.id}> 
-      [id] - {h.id}
-      [name] - {h.userName}
-      [email] - {h.email}
-      [phoneNumber] - {h.phoneNumber}</p>)
-    }
-    </>
-  )
-  }
+}
