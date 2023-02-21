@@ -75,9 +75,8 @@ export class DB {
     deleteItem(item) {
         this.data.forEach(e => {
             if(item.id === e.id) {
-                console.log(1)
                 const index = this.data.indexOf(e, this.data.indexOf(e));
-                this.data.splice(index, index)
+                this.data.splice(index, 1)
                 this.saveFile(this.data)
                 return true
             }
@@ -91,6 +90,5 @@ export class DB {
   
   
 new DB('users', { unique: ['email', 'phone']});
-
 
   
