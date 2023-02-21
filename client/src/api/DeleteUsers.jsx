@@ -1,16 +1,15 @@
-
-function delUser(users, id) {
-  let str = [];
-
-  for(const a of users) {
-    if (a.id !== id)
-      str.push(a);
+function deleteUsers(users, index) {
+  try {
+    return users.filter((user, userIndex) => userIndex !== index);
   }
-  return str;
+  catch {
+    console.log("err");
+  }
 }
 
-export const DeleteUsers = () => {  
-    let newArr = [];
+export const DeleteUsers = () => {
+    const copyObj = [];
+    const idUser = 3;
  
     fetch(`${window.api.url}/users`,{
         method: 'DELETE',
@@ -21,8 +20,15 @@ export const DeleteUsers = () => {
     })
     .then(res => res.json())
     .then(data => {
-    newArr = delUser(data.result, 2) // 2 is id user which we want to del
-    console.log(newArr);
+      try {
+        copyObj.push(deleteUsers(data.result, idUser - 1));
+        console.log(copyObj);
+
+      }
+      catch (err) {
+        console.log("Something went wrong.");
+      }
     })
+
 }
   
