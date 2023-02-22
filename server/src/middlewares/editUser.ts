@@ -1,25 +1,27 @@
-import { updateUser } from "#";
+import { usersDB } from "../services/db/users.db";
 import { validateEmail, validatePhone, validateName } from "../validation/validation";
 
-export const update = (req, res) => {
+export const editUser = (req, res) => {
   const { id } = req.params;
   const { userName, email, phoneNumber } = req.body;
 
   if (!userName || !email || !phoneNumber) {
-    res.status(400).json({ message: "Please provide name, email and phone" });
-    return;
+    return res.status(400).json({ message: "Please provide name, email and phone" });
   }
   if (!validateEmail(email)) {
-    res.status(400).json({ message: "Not valid Email" });
-    return;
+    return res.status(400).json({ message: "Not valid Email" });
   } else if (!validatePhone(phoneNumber)) {
-    res.status(400).json({ message: "Not valid phone" });
-    return;
+    return res.status(400).json({ message: "Not valid phone" });
   } else if (!validateName(userName)) {
-    res.status(400).json({ message: "Not valid name" });
+    return res.status(400).json({ message: "Not valid name" });
   }
+
   try {
-    const updatedUser = updateUser({ id, name: userName, email, phone: phoneNumber });
+    const updatedUser = usersDB.updateItem(parseInt(id), {
+      userName: userName,
+      email,
+      phoneNumber: phoneNumber,
+    });
     console.log(`User with id ${id} has been updated.`);
     res.json(updatedUser);
   } catch (err) {

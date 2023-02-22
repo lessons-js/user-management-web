@@ -1,8 +1,8 @@
-import { deleteUser } from "#";
+import { usersDB } from "../services/db/users.db";
 
-export const deleteUserById = (req, res) => {
+export const deleteUser = (req, res) => {
   const { id } = req.params;
-  deleteUser(id);
+  usersDB.deleteItem(id);
   console.log(`User with id ${id} has been successfully deleted.`);
   res.json({ message: `User with id ${id} has been successfully deleted.` });
 };

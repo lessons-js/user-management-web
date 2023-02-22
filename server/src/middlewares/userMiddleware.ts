@@ -1,6 +1,6 @@
-import { users } from "./getUsers";
-import { update } from "./editUser";
-import { create } from "./createUser";
-import { deleteUserById } from "./deleteUser";
+import { getUsers } from "./getUsers";
+import { editUser } from "./editUser";
+import { createUser } from "./createUser";
+import { deleteUser } from "./deleteUser";
 
-export { users, update, create, deleteUserById };
+export { getUsers, editUser, createUser, deleteUser };

@@ -1,7 +1,7 @@
-import { getUsers } from "#";
+import { usersDB } from "../services/db/users.db";
 
-export const users = (req, res) => {
-  const users = getUsers;
+export const getUsers = (req, res) => {
+  const users = usersDB.findAll();
   res.json(users);
   console.log(users);
 };

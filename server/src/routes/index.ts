@@ -1,16 +1,12 @@
 import express from "express";
-import { users, create, update, deleteUserById } from "../middlewares/userMiddleware";
+import { getUsers, createUser, editUser, deleteUser } from "../middlewares/userMiddleware";
 import "../services/db/db.service";
-
-
 
 const routes = express.Router();
 
-routes.route("/users").get(users);
-routes.route("/users").post(create);
-routes.route("users/:userId").delete(deleteUserById);
-routes.route("users/:userId").put(update);
-
-
+routes.route("/users").get(getUsers);
+routes.route("/users").post(createUser);
+routes.route("/users/:id").delete(deleteUser);
+routes.route("/users/:id").put(editUser);
 
 export default routes;

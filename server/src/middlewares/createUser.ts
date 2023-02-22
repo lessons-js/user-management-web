@@ -1,7 +1,7 @@
-import { addUser } from "#";
+import { usersDB } from "../services/db/users.db";
 import { validateEmail, validatePhone, validateName } from "../validation/validation";
 
-export const create = (req, res) => {
+export const createUser = (req, res) => {
   const { userName, email, phoneNumber, id } = req.body;
   if (!validateEmail(email)) {
     res.status(400).json({ message: "Not valid Email" });
@@ -13,7 +13,7 @@ export const create = (req, res) => {
     res.status(400).json({ message: "Not valid name" });
   }
   try {
-    addUser(req.body);
+    usersDB.addItem(req.body);
     console.log(
       `User ${userName} with email ${email} and phone ${phoneNumber} has been successfully added.`
     );
