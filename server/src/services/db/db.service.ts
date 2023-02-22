@@ -69,21 +69,18 @@ export class DB {
     this.saveFile(this.data);
   }
 
-    deleteItem(item) {
-        this.data.forEach(e => {
-            if(item === e.id) {
-                const index = this.data.indexOf(e, this.data.indexOf(e));
-                this.data.splice(index, 1)
-                this.saveFile(this.data)
-                return true
-            }
-        })
-    
-        return false
-    }
+  deleteItem(item) {
+    this.data.forEach((e) => {
+      if (item === e.id) {
+        const index = this.data.indexOf(e, this.data.indexOf(e));
+        this.data.splice(index, 1);
+        this.saveFile(this.data);
+        return true;
+      }
+    });
 
-    return false
+    return false;
   }
 }
 
-new DB('users', { unique: ['email', 'phone']}); 
+new DB("users", { unique: ["email", "phone"] });

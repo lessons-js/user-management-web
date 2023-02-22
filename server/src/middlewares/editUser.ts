@@ -18,9 +18,9 @@ export const editUser = (req, res) => {
 
   try {
     const updatedUser = usersDB.updateItem(parseInt(id), {
-      userName: userName,
+      userName,
       email,
-      phoneNumber: phoneNumber,
+      phoneNumber,
     });
     console.log(`User with id ${id} has been updated.`);
     res.json(updatedUser);
