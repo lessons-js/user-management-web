@@ -4,15 +4,23 @@ export class DB {
     data;
     uniqueIndexes: any = {};
     dbFilePass;
+    dbFolderPass;
   
     constructor(name, options) {
+        
         this.dbFilePass = `./db-data/${name}.json`;
-
+        this.dbFolderPass = './db-data/';
         const fileExists = fs.existsSync(this.dbFilePass);
+        const folderExists = fs.existsSync(this.dbFolderPass);
+
+        if (!folderExists) {
+            fs.mkdirSync('./db-data/');
+        }
     
         if (!fileExists) {
             fs.writeFileSync(this.dbFilePass, '[]');
         }
+
 
         options.unique.forEach(element => {
             this.uniqueIndexes[element] = new Set();
@@ -78,10 +86,10 @@ export class DB {
                 const index = this.data.indexOf(e, this.data.indexOf(e));
                 this.data.splice(index, 1)
                 this.saveFile(this.data)
-                return true
             }
+            return true
         })
-    
+        
         return false
     }
 
