@@ -4,12 +4,11 @@ export class DB {
     data;
     uniqueIndexes: any = {};
     dbFilePass;
-    dbFolderPass;
+    dbFolderPass ='./db-data/';
   
     constructor(name, options) {
         
         this.dbFilePass = `./db-data/${name}.json`;
-        this.dbFolderPass = './db-data/';
         const fileExists = fs.existsSync(this.dbFilePass);
         const folderExists = fs.existsSync(this.dbFolderPass);
 
@@ -81,16 +80,15 @@ export class DB {
     }
 
     deleteItem(item) {
+        const length = this.data.length;
         this.data.forEach(e => {
             if(item === e.id) {
                 const index = this.data.indexOf(e, this.data.indexOf(e));
                 this.data.splice(index, 1)
                 this.saveFile(this.data)
             }
-            return true
         })
-        
-        return false
+        return length !== this.data.length
     }
 
     
@@ -99,4 +97,3 @@ export class DB {
   
 new DB('users', { unique: ['email', 'phone']});
 
-  
