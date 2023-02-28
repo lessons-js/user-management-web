@@ -6,7 +6,7 @@ export const editUser = (req, res) => {
   const { userName, email, phoneNumber } = req.body;
 
   if (!userName && !email && !phoneNumber) {
-    return res.status(400).json({ message: "Please provide name, email and phone" });
+    return res.status(400).json({ message: "Please provide name, email or phone" });
   }
   if (!validateEmail(email)) {
     return res.status(400).json({ message: "Not valid Email" });
