@@ -81,9 +81,8 @@ export class DB {
 
     deleteItem(item) {
         let isDelete = false;
-        this.data.forEach(e => {
+        this.data.forEach((e, index) => {
             if(item === e.id) {
-                const index = this.data.indexOf(e);
                 this.data.splice(index, 1)
                 this.saveFile(this.data)
                 isDelete = true;
