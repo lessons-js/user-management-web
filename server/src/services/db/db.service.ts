@@ -80,20 +80,19 @@ export class DB {
     }
 
     deleteItem(item) {
-        const length = this.data.length;
+        let isDelete = false;
         this.data.forEach(e => {
             if(item === e.id) {
-                const index = this.data.indexOf(e, this.data.indexOf(e));
+                const index = this.data.indexOf(e);
                 this.data.splice(index, 1)
                 this.saveFile(this.data)
+                isDelete = true;
             }
         })
-        return length !== this.data.length
+        return isDelete
     }
 
     
 }
   
-  
 new DB('users', { unique: ['email', 'phone']});
-
