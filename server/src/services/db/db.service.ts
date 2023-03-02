@@ -1,19 +1,21 @@
 import * as fs  from 'fs';
 
+const dbFolderPass ='./db-data/';
+
 export class DB {
     data;
     uniqueIndexes: any = {};
     dbFilePass;
-    dbFolderPass ='./db-data/';
+    
   
     constructor(name, options) {
         
-        this.dbFilePass = `./db-data/${name}.json`;
+        this.dbFilePass = `${dbFolderPass}${name}.json`;
         const fileExists = fs.existsSync(this.dbFilePass);
-        const folderExists = fs.existsSync(this.dbFolderPass);
+        const folderExists = fs.existsSync(dbFolderPass);
 
         if (!folderExists) {
-            fs.mkdirSync('./db-data/');
+            fs.mkdirSync(dbFolderPass);
         }
     
         if (!fileExists) {
