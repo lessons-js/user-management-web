@@ -19,9 +19,5 @@ export function validateName(value) {
   const MIN_LENGTH = 2;
   const MAX_LENGTH = 20;
 
-  if (value.length >= MIN_LENGTH && value.length <= MAX_LENGTH) {
-    return true;
-  } else {
-    return false;
-  }
+  return value.length >= MIN_LENGTH && value.length <= MAX_LENGTH ? true : false;
 }
