@@ -7,21 +7,18 @@ export class DB {
     uniqueIndexes: any = {};
     dbFilePass;
     
-  
     constructor(name, options) {
-        
         this.dbFilePass = `${dbFolderPass}${name}.json`;
         const fileExists = fs.existsSync(this.dbFilePass);
         const folderExists = fs.existsSync(dbFolderPass);
 
-        if (!folderExists) {
+        if(!folderExists) {
             fs.mkdirSync(dbFolderPass);
         }
     
-        if (!fileExists) {
+        if(!fileExists) {
             fs.writeFileSync(this.dbFilePass, '[]');
         }
-
 
         options.unique.forEach(element => {
             this.uniqueIndexes[element] = new Set();
@@ -31,9 +28,9 @@ export class DB {
     
         this.data.forEach(user => {
             options.unique.forEach(field => {
-            if (user[field]) {
-                this.uniqueIndexes[field].add(user[field])
-            }
+                if(user[field]) {
+                    this.uniqueIndexes[field].add(user[field])
+                }
             })
         });
 
@@ -43,9 +40,8 @@ export class DB {
        return this.data
     }
 
-
     saveFile(file) {
-        if (!file) {
+        if(!file) {
             throw('Cant save file');
         } 
         fs.writeFileSync(this.dbFilePass, JSON.stringify(file, null))
@@ -59,7 +55,7 @@ export class DB {
         const lastItem = this.returnLastItem(this.data);
     
         Object.keys(this.uniqueIndexes).forEach(fild => {
-            if (this.uniqueIndexes[fild].has(item[fild])) {
+            if(this.uniqueIndexes[fild].has(item[fild])) {
                 throw('пользователь с такими данными уже зарегестрирован')
             }
         })
@@ -70,21 +66,19 @@ export class DB {
     }
 
     updateItem(itemId, update) {
-        this.data.forEach(item => {
+        this.data.forEach((item, index) => {
             if(item.id === itemId) {
-                const index = this.data.indexOf(item, this.data.indexOf(item));
                 this.data[index] = {...item, ...update}
             }
         })
-        
+
         this.saveFile(this.data)
-    
     }
 
-    deleteItem(item) {
+    deleteItem(itemID) {
         let isDelete = false;
         this.data.forEach((e, index) => {
-            if(item === e.id) {
+            if(itemID === e.id) {
                 this.data.splice(index, 1)
                 this.saveFile(this.data)
                 isDelete = true;
@@ -92,8 +86,6 @@ export class DB {
         })
         return isDelete
     }
-
-    
 }
   
 new DB('users', { unique: ['email', 'phone']});
