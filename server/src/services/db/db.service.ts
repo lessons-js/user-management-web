@@ -1,22 +1,22 @@
-import * as fs  from 'fs';
+import * as fs from 'fs';
 
-const dbFolderPass ='./db-data/';
+const dbFolderPass = './db-data/';
 
 export class DB {
     data;
     uniqueIndexes: any = {};
     dbFilePass;
-    
+
     constructor(name, options) {
         this.dbFilePass = `${dbFolderPass}${name}.json`;
         const fileExists = fs.existsSync(this.dbFilePass);
         const folderExists = fs.existsSync(dbFolderPass);
 
-        if(!folderExists) {
+        if (!folderExists) {
             fs.mkdirSync(dbFolderPass);
         }
-    
-        if(!fileExists) {
+
+        if (!fileExists) {
             fs.writeFileSync(this.dbFilePass, '[]');
         }
 
@@ -24,11 +24,11 @@ export class DB {
             this.uniqueIndexes[element] = new Set();
         });
 
-        this.data = JSON.parse(fs.readFileSync((this.dbFilePass), {encoding: 'utf-8'}));
-    
+        this.data = JSON.parse(fs.readFileSync((this.dbFilePass), { encoding: 'utf-8' }));
+
         this.data.forEach(user => {
             options.unique.forEach(field => {
-                if(user[field]) {
+                if (user[field]) {
                     this.uniqueIndexes[field].add(user[field])
                 }
             })
@@ -37,13 +37,13 @@ export class DB {
     }
 
     findAll() {
-       return this.data
+        return this.data
     }
 
     saveFile(file) {
-        if(!file) {
-            throw('Cant save file');
-        } 
+        if (!file) {
+            throw ('Cant save file');
+        }
         fs.writeFileSync(this.dbFilePass, JSON.stringify(file, null))
     }
 
@@ -53,22 +53,22 @@ export class DB {
 
     addItem(item) {
         const lastItem = this.returnLastItem(this.data);
-    
+
         Object.keys(this.uniqueIndexes).forEach(fild => {
-            if(this.uniqueIndexes[fild].has(item[fild])) {
-                throw('пользователь с такими данными уже зарегестрирован')
+            if (this.uniqueIndexes[fild].has(item[fild])) {
+                throw ('пользователь с такими данными уже зарегестрирован')
             }
         })
-     
-        this.data.push({id: lastItem ? lastItem.id + 1 : 1, ...item});
+
+        this.data.push({ id: lastItem ? lastItem.id + 1 : 1, ...item });
         this.saveFile(this.data)
         return true
     }
 
     updateItem(itemId, update) {
         this.data.forEach((item, index) => {
-            if(item.id === itemId) {
-                this.data[index] = {...item, ...update}
+            if (item.id === itemId) {
+                this.data[index] = { ...item, ...update }
             }
         })
 
@@ -78,7 +78,7 @@ export class DB {
     deleteItem(itemID) {
         let isDelete = false;
         this.data.forEach((e, index) => {
-            if(itemID === e.id) {
+            if (itemID === e.id) {
                 this.data.splice(index, 1)
                 this.saveFile(this.data)
                 isDelete = true;
@@ -87,5 +87,5 @@ export class DB {
         return isDelete
     }
 }
-  
-new DB('users', { unique: ['email', 'phone']});
+
+new DB('users', { unique: ['email', 'phone'] });
