@@ -1,6 +1,6 @@
 import React from "react";
-import Modal from "./Modal.jsx";
-import { validateName, validateEmail, validatePhone } from "../../validation/validation.ts";
+import Modal from "./Modal";
+import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const UserModal = ({
   active,

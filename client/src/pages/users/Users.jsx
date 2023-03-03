@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../users/Users.scss";
-import Modal from "../../components/modal/Modal.jsx";
-import UserModal from "../../components/modal/userModal.jsx";
-import { validateName, validateEmail, validatePhone } from "../../validation/validation.ts";
+import Modal from "../../components/modal/Modal";
+import UserModal from "../../components/modal/userModal";
+import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const Users = () => {
   const [modalActive, setModalActive] = useState(false);
