@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "./Modal";
-import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const UserModal = ({
   active,
@@ -41,7 +40,7 @@ const UserModal = ({
           <button className="confirm-btn" type="button" onClick={onSubmit}>
             Confirm
           </button>
-          <button className="decline-btn" onClick={() => setActive(false)}>
+          <button type="button" className="decline-btn" onClick={() => setActive(false)}>
             Decline
           </button>
         </div>
