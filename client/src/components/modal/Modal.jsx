@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./modal.css";
+import "./modal.scss";
 
 const Modal = ({ active, setActive, children }) => {
   return (

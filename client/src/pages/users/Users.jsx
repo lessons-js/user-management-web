@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../users/Users.css";
+import "../users/Users.scss";
 import Modal from "../../components/modal/Modal.jsx";
 import UserModal from "../../components/modal/userModal.jsx";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation.ts";
