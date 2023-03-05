@@ -9,7 +9,7 @@ export function getUsersWithDelay(delay = 3000, returnSuccess = true) {
   });
 }
 
-export function updateUsersWithDelay(userToUpdate, delay = 3000, returnSuccess = true) {
+export function updateUsersWithDelay(userToUpdate = 1, delay = 3000, returnSuccess = true) {
   return new Promise((res, rej) => {
     setTimeout(() => returnSuccess ? res({ data: userToUpdate }) : rej(fakeErrorResponse), delay);
   });
