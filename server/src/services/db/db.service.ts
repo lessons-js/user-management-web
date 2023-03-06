@@ -3,9 +3,9 @@ import * as fs from 'fs';
 const dbFolderPass = './db-data/';
 
 export class DB {
-    data;
-    uniqueIndexes: any = {};
-    dbFilePass;
+    private data;
+    private uniqueIndexes: any = {};
+    private dbFilePass;
 
     constructor(name, options) {
         this.dbFilePass = `${dbFolderPass}${name}.json`;
@@ -36,22 +36,22 @@ export class DB {
 
     }
 
-    findAll() {
+    public findAll() {
         return this.data
     }
 
-    saveFile(file) {
+    private saveFile(file) {
         if (!file) {
             throw ('Cant save file');
         }
         fs.writeFileSync(this.dbFilePass, JSON.stringify(file, null))
     }
 
-    returnLastItem(arr) {
+    private returnLastItem(arr) {
         return arr[arr.length - 1];
     }
 
-    addItem(item) {
+    public addItem(item) {
         const lastItem = this.returnLastItem(this.data);
 
         Object.keys(this.uniqueIndexes).forEach(fild => {
@@ -65,7 +65,7 @@ export class DB {
         return true
     }
 
-    updateItem(itemId, update) {
+    public updateItem(itemId, update) {
         this.data.forEach((item, index) => {
             if (item.id === itemId) {
                 this.data[index] = { ...item, ...update }
@@ -75,7 +75,7 @@ export class DB {
         this.saveFile(this.data)
     }
 
-    deleteItem(itemID) {
+    public deleteItem(itemID) {
         let isDelete = false;
         this.data.forEach((e, index) => {
             if (itemID === e.id) {
