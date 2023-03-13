@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../users/Users.scss";
 import Modal from "../../components/modal/Modal";
 import UserModal from "../../components/modal/userModal";
+import UsersTable from "../../components/table/userTable";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const Users = () => {
@@ -48,27 +49,48 @@ const Users = () => {
     handleConfirmClick();
   };
 
+  const users = [
+    { id: 1, userName: "Radion", email: "radion@gmail.com", phoneNumber: "+3806676676" },
+    { id: 2, userName: "Alex", email: "Alex@gmail.com", phoneNumber: "+380665353553" },
+    { id: 3, userName: "Andrew", email: "Andrew@gmail.com", phoneNumber: "+380667365" },
+    { id: 4, userName: "Viktor", email: "Viktor@gmail.com", phoneNumber: "+8805553535" },
+  ];
+  const headers = ["id", "userName", "email", "phoneNumber", "Actions"];
+
+  const handleUserEdit = (userId) => {};
+
+  const handleUserDelete = (userId) => {};
+
   return (
-    <div className="app">
-      <main>
-        <div className="user-info">
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Phone: {user.phoneNumber}</p>
-        </div>
-        <button className="open-btn" onClick={() => setModalActive(true)}>
-          Open modal
-        </button>
-      </main>
-      <UserModal
-        user={user}
-        error={error}
-        handleInputChange={handleInputChange}
-        onSubmit={onSubmit}
-        active={modalActive}
-        setActive={setModalActive}
-        handleConfirmClick={handleConfirmClick}
+    <div>
+      <h1>Users</h1>
+      <UsersTable
+        users={users}
+        onUserEdit={handleUserEdit}
+        onUserDelete={handleUserDelete}
+        headers={headers}
       />
+      <div className="app">
+        <main>
+          <div className="user-info">
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+            <p>Phone: {user.phoneNumber}</p>
+          </div>
+          <button className="open-btn" onClick={() => setModalActive(true)}>
+            Open modal
+          </button>
+        </main>
+        <UserModal
+          user={user}
+          error={error}
+          handleInputChange={handleInputChange}
+          onSubmit={onSubmit}
+          active={modalActive}
+          setActive={setModalActive}
+          handleConfirmClick={handleConfirmClick}
+        />
+      </div>
     </div>
   );
 };
