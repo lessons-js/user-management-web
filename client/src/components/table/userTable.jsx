@@ -23,6 +23,7 @@ const UsersTable = ({ users, onUserEdit, onUserDelete, headers }) => {
                     onUserEdit={onUserEdit}
                     onUserDelete={onUserDelete}
                     userId={user.id}
+                    user={user}
                   />
                 ) : (
                   user[header]

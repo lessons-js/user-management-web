@@ -10,29 +10,30 @@ const UserModal = ({
   handleConfirmClick,
   onSubmit,
 }) => {
+  const { userName, email, phoneNumber } = user || {};
   return (
     <Modal active={active} setActive={setActive}>
       <p>Edit User</p>
       <form>
         <input
           type="text"
-          name="name"
+          name="userName"
           placeholder="Name"
-          value={user.name}
+          value={userName}
           onChange={handleInputChange}
         />
         <input
           type="email"
           name="email"
           placeholder="Email"
-          value={user.email}
+          value={email}
           onChange={handleInputChange}
         />
         <input
           type="tel"
           name="phoneNumber"
           placeholder="Phone number"
-          value={user.phoneNumber}
+          value={phoneNumber}
           onChange={handleInputChange}
         />
         <div className="err">{error}</div>

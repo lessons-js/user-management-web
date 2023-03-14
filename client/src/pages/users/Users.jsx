@@ -1,41 +1,44 @@
 import React, { useState } from "react";
 import "../users/Users.scss";
-import Modal from "../../components/modal/Modal";
 import UserModal from "../../components/modal/userModal";
 import UsersTable from "../../components/table/userTable";
+import DeleteModal from "../../components/modal/DeleteModal";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const Users = () => {
   const [modalActive, setModalActive] = useState(false);
-  const [user, setUser] = useState({
-    name: "Radion",
-    email: "Radion@gmail.com",
-    phoneNumber: "+380636490004",
-  });
+  const [deleteModalActive, setDeleteModalActive] = useState(false);
   const [error, setError] = useState("");
+  const [selectedUser, setSelectedUser] = useState({
+    userName: "",
+    phoneNumber: "",
+    email: "",
+  });
 
+  // to modal
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    setUser((prevUser) => ({
+    setSelectedUser((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
   const handleConfirmClick = () => {
-    console.log(`Name: ${user.name}, Email: ${user.email}, Phone number: ${user.phoneNumber}`);
+    console.log(
+      `Name: ${selectedUser.userName}, Email: ${selectedUser.email}, Phone number: ${selectedUser.phoneNumber}`
+    );
   };
 
   const onSubmit = () => {
     const errors = [];
-    if (!validateName(user.name)) {
+    if (!validateName(selectedUser.userName)) {
       errors.push("Please enter a valid name");
     }
-    if (!validateEmail(user.email)) {
+    if (!validateEmail(selectedUser.email)) {
       errors.push("Please enter a valid email");
     }
-    if (!validatePhone(user.phoneNumber)) {
+    if (!validatePhone(selectedUser.phoneNumber)) {
       errors.push("Please enter a valid phone");
     }
 
@@ -57,9 +60,15 @@ const Users = () => {
   ];
   const headers = ["id", "userName", "email", "phoneNumber", "Actions"];
 
-  const handleUserEdit = (userId) => {};
+  const handleUserEdit = (userId, user) => {
+    setSelectedUser(user);
+    setModalActive(true);
+  };
 
-  const handleUserDelete = (userId) => {};
+  const handleUserDelete = (userId, user) => {
+    setSelectedUser(user);
+    setDeleteModalActive(true);
+  };
 
   return (
     <div>
@@ -71,18 +80,8 @@ const Users = () => {
         headers={headers}
       />
       <div className="app">
-        <main>
-          <div className="user-info">
-            <p>Name: {user.name}</p>
-            <p>Email: {user.email}</p>
-            <p>Phone: {user.phoneNumber}</p>
-          </div>
-          <button className="open-btn" onClick={() => setModalActive(true)}>
-            Open modal
-          </button>
-        </main>
         <UserModal
-          user={user}
+          user={selectedUser}
           error={error}
           handleInputChange={handleInputChange}
           onSubmit={onSubmit}
@@ -91,6 +90,12 @@ const Users = () => {
           handleConfirmClick={handleConfirmClick}
         />
       </div>
+      <DeleteModal
+        user={selectedUser}
+        active={deleteModalActive}
+        setActive={setDeleteModalActive}
+        userDelete={handleUserDelete}
+      />
     </div>
   );
 };
