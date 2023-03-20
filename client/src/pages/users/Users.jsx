@@ -15,6 +15,8 @@ const Users = () => {
     email: "",
   });
 
+  // to modal
+
   const handleConfirmClick = () => {
     console.log(
       `Name: ${selectedUser.userName}, Email: ${selectedUser.email}, Phone number: ${selectedUser.phoneNumber}`
@@ -80,6 +82,7 @@ const Users = () => {
         <UserModal
           user={selectedUser}
           error={error}
+          setUser={setSelectedUser}
           onSubmit={onSubmit}
           active={modalActive}
           setActive={setModalActive}
