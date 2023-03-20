@@ -1,6 +1,5 @@
 import React from "react";
 import UserActions from "./userActions";
-import UserModal from "../../components/modal/userModal";
 import "./table.scss";
 
 const UsersTable = ({ users, onUserEdit, onUserDelete, headers }) => {

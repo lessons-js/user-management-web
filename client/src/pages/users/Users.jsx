@@ -15,15 +15,6 @@ const Users = () => {
     email: "",
   });
 
-  // to modal
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setSelectedUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
-  };
-
   const handleConfirmClick = () => {
     console.log(
       `Name: ${selectedUser.userName}, Email: ${selectedUser.email}, Phone number: ${selectedUser.phoneNumber}`
@@ -65,9 +56,15 @@ const Users = () => {
     setModalActive(true);
   };
 
-  const handleUserDelete = (userId, user) => {
+  const OnUserDelete = (userId, user) => {
     setSelectedUser(user);
     setDeleteModalActive(true);
+  };
+
+  const handleUserDelete = (userId, user) => {
+    setSelectedUser(user);
+    setDeleteModalActive(false);
+    console.log("delete user", user.userName);
   };
 
   return (
@@ -76,14 +73,13 @@ const Users = () => {
       <UsersTable
         users={users}
         onUserEdit={handleUserEdit}
-        onUserDelete={handleUserDelete}
+        onUserDelete={OnUserDelete}
         headers={headers}
       />
       <div className="app">
         <UserModal
           user={selectedUser}
           error={error}
-          handleInputChange={handleInputChange}
           onSubmit={onSubmit}
           active={modalActive}
           setActive={setModalActive}

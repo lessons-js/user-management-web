@@ -7,7 +7,7 @@ const DeleteModal = ({ active, setActive, user, userDelete }) => {
       <div className="modal_delete">
         <p>Are you sure you want to delete user {user.userName}?</p>
         <div className="button-container">
-          <button className="confirm-btn" onClick={userDelete}>
+          <button className="confirm-btn" onClick={() => userDelete("", user)}>
             Yes
           </button>
           <button className="decline-btn" onClick={() => setActive(false)}>
