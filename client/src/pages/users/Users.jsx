@@ -4,6 +4,8 @@ import UserModal from "../../components/modal/userModal";
 import UsersTable from "../../components/table/userTable";
 import DeleteModal from "../../components/modal/DeleteModal";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
+import { Pagination } from "../../components/pagination/Pagination";
+
 
 const Users = () => {
   const [modalActive, setModalActive] = useState(false);
@@ -49,6 +51,8 @@ const Users = () => {
     { id: 3, userName: "Andrew", email: "Andrew@gmail.com", phoneNumber: "+380667365" },
     { id: 4, userName: "Viktor", email: "Viktor@gmail.com", phoneNumber: "+8805553535" },
   ];
+  let data;
+
   const headers = ["id", "userName", "email", "phoneNumber", "Actions"];
 
   const handleUserEdit = (userId, user) => {
@@ -66,6 +70,10 @@ const Users = () => {
     setDeleteModalActive(false);
     console.log("delete user", user.userName);
   };
+
+  function onPaginationChange(pagination) {
+    data = users.slice(users.length - pagination.pageSize)
+  }
 
   return (
     <div>
@@ -91,6 +99,9 @@ const Users = () => {
         active={deleteModalActive}
         setActive={setDeleteModalActive}
         userDelete={handleUserDelete}
+      />
+      <Pagination
+        onChange={onPaginationChange}
       />
     </div>
   );
