@@ -6,11 +6,11 @@ import DeleteModal from "../../components/modal/DeleteModal";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 import { Pagination } from "../../components/pagination/Pagination";
 
-
 const Users = () => {
   const [modalActive, setModalActive] = useState(false);
   const [deleteModalActive, setDeleteModalActive] = useState(false);
   const [error, setError] = useState("");
+  const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState({
     userName: "",
     phoneNumber: "",
@@ -45,14 +45,6 @@ const Users = () => {
     handleConfirmClick();
   };
 
-  const users = [
-    { id: 1, userName: "Radion", email: "radion@gmail.com", phoneNumber: "+3806676676" },
-    { id: 2, userName: "Alex", email: "Alex@gmail.com", phoneNumber: "+380665353553" },
-    { id: 3, userName: "Andrew", email: "Andrew@gmail.com", phoneNumber: "+380667365" },
-    { id: 4, userName: "Viktor", email: "Viktor@gmail.com", phoneNumber: "+8805553535" },
-  ];
-  let data;
-
   const headers = ["id", "userName", "email", "phoneNumber", "Actions"];
 
   const handleUserEdit = (userId, user) => {
@@ -68,11 +60,14 @@ const Users = () => {
   const handleUserDelete = (userId, user) => {
     setSelectedUser(user);
     setDeleteModalActive(false);
-    console.log("delete user", user.userName);
   };
 
   function onPaginationChange(pagination) {
-    data = users.slice(users.length - pagination.pageSize)
+    fetch(`http://localHost:3001/users?pageNumber=${pagination.pageNumber}&pageSize=${pagination.pageSize}`).then(res => res.json()).then(res => {
+      if (res.data) {
+        setUsers(res.data);
+      }
+    });
   }
 
   return (
@@ -100,9 +95,7 @@ const Users = () => {
         setActive={setDeleteModalActive}
         userDelete={handleUserDelete}
       />
-      <Pagination
-        onChange={onPaginationChange}
-      />
+      <Pagination onChange={onPaginationChange} />
     </div>
   );
 };

@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": 1,
+    "userName": "Radion",
+    "email": "radion@gmail.com",
+    "phoneNumber": "+3806676676"
+  },
+  {
+    "id": 2,
+    "userName": "Alex",
+    "email": "Alex@gmail.com",
+    "phoneNumber": "+380665353553"
+  },
+  {
+    "id": 3,
+    "userName": "Andrew",
+    "email": "Andrew@gmail.com",
+    "phoneNumber": "+380667365"
+  },
+  {
+    "id": 4,
+    "userName": "Viktor",
+    "email": "Viktor@gmail.com",
+    "phoneNumber": "+8805553535"
+  }
+]
