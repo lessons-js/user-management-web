@@ -19,7 +19,7 @@ export const Pagination = (props) => {
     const prev = () => {
         if (pageNumber > 0) {
             const nextPageNumber = pageNumber - 1;
-            setPageNumber(pageNumber - 1);
+            setPageNumber(nextPageNumber);
             onChange({ pageNumber: nextPageNumber, pageSize });
         }
     }
