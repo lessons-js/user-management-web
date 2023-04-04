@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import "../users/Users.scss";
 import UserModal from "../../components/modal/userModal";
 import UsersTable from "../../components/table/userTable";
@@ -14,8 +15,14 @@ const Users = () => {
     phoneNumber: "",
     email: "",
   });
+  const [users, setUsers] = useState([]);
 
-  // to modal
+  useEffect(() => {
+    fetch("http://localhost:3001/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data))
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleConfirmClick = () => {
     console.log(
@@ -45,12 +52,6 @@ const Users = () => {
     handleConfirmClick();
   };
 
-  const users = [
-    { id: 1, userName: "Radion", email: "radion@gmail.com", phoneNumber: "+3806676676" },
-    { id: 2, userName: "Alex", email: "Alex@gmail.com", phoneNumber: "+380665353553" },
-    { id: 3, userName: "Andrew", email: "Andrew@gmail.com", phoneNumber: "+380667365" },
-    { id: 4, userName: "Viktor", email: "Viktor@gmail.com", phoneNumber: "+8805553535" },
-  ];
   const headers = ["id", "userName", "email", "phoneNumber", "Actions"];
 
   const handleUserEdit = (userId, user) => {
