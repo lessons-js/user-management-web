@@ -2,7 +2,7 @@ import React from "react";
 import UserActions from "./userActions";
 import "./table.scss";
 
-const UsersTable = ({ users, onUserEdit, onUserDelete, headers }) => {
+const UsersTable = ({ users, onUserEdit, onUserDelete, showUserDetails, headers }) => {
   return (
     <table>
       <thead>
@@ -19,6 +19,7 @@ const UsersTable = ({ users, onUserEdit, onUserDelete, headers }) => {
               <td key={header}>
                 {header === "Actions" ? (
                   <UserActions
+                    showUserDetails={showUserDetails}
                     onUserEdit={onUserEdit}
                     onUserDelete={onUserDelete}
                     userId={user.id}

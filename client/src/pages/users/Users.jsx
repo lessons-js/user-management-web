@@ -3,6 +3,7 @@ import "../users/Users.scss";
 import UserModal from "../../components/modal/userModal";
 import UsersTable from "../../components/table/userTable";
 import DeleteModal from "../../components/modal/DeleteModal";
+import Details from "../users/Details"
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const Users = () => {
@@ -61,6 +62,12 @@ const Users = () => {
     setDeleteModalActive(true);
   };
 
+  const showUserDetails = (userId,user) => {
+    fetch(`http://localhost:3001/users/${userId}`).then(res => res.json()).then(res => {
+      user(res)
+    })
+  }
+
   const handleUserDelete = (userId, user) => {
     setSelectedUser(user);
     setDeleteModalActive(false);
@@ -74,6 +81,7 @@ const Users = () => {
         users={users}
         onUserEdit={handleUserEdit}
         onUserDelete={OnUserDelete}
+        showUserDetails={showUserDetails}
         headers={headers}
       />
       <div className="app">
@@ -91,6 +99,9 @@ const Users = () => {
         active={deleteModalActive}
         setActive={setDeleteModalActive}
         userDelete={handleUserDelete}
+      />
+      <Details
+        user={selectedUser}
       />
     </div>
   );
