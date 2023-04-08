@@ -63,8 +63,8 @@ const Users = () => {
   };
 
   const showUserDetails = (userId,user) => {
-    fetch(`http://localhost:3001/users/${userId}`).then(res => res.json()).then(res => {
-      user(res)
+    fetch(`http://localhost:3001/hello`).then(res => res.json()).then(res => {
+      console.log(res)
     })
   }
 
