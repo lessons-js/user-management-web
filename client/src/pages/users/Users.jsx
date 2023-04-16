@@ -4,12 +4,14 @@ import UserModal from "../../components/modal/userModal";
 import UsersTable from "../../components/table/userTable";
 import DeleteModal from "../../components/modal/DeleteModal";
 import Details from "../users/Details"
+import { useNavigate } from "react-router-dom";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const Users = () => {
   const [modalActive, setModalActive] = useState(false);
   const [deleteModalActive, setDeleteModalActive] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState({
     userName: "",
     phoneNumber: "",
@@ -61,11 +63,10 @@ const Users = () => {
     setSelectedUser(user);
     setDeleteModalActive(true);
   };
+  
 
-  const showUserDetails = (userId,user) => {
-    fetch(`http://localhost:3001/hello`).then(res => res.json()).then(res => {
-      console.log(res)
-    })
+  const showUserDetails = (userId) => {
+    navigate(`/users/${userId}`)
   }
 
   const handleUserDelete = (userId, user) => {

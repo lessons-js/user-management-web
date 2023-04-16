@@ -9,9 +9,7 @@ const UserActions = ({ onUserEdit, onUserDelete, showUserDetails, userId, user }
       <button className="delete-btn" onClick={() => onUserDelete(userId, user)}>
         Delete
       </button>
-      <button className="showDetails-btn" onClick={() => showUserDetails(userId, user)}>
-          Details
-      </button>
+      <button className="details-btn" onClick={() => showUserDetails(userId)}>Details</button>
     </>
   );
 };
