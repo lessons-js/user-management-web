@@ -8,5 +8,6 @@ routes.route("/users").get(getUsers);
 routes.route("/users").post(createUser);
 routes.route("/users/:id").delete(deleteUser);
 routes.route("/users/:id").put(editUser);
+routes.route("/users/:id").get()
 
 export default routes;
