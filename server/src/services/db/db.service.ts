@@ -89,10 +89,10 @@ export class DB {
 
     public detailsItem(itemId) {
         let currentUser = "";
-        this.data.forEach((e,index) => {
-            if(itemId === e.id) {
-                currentUser = this.data
-                console.log(currentUser)
+        this.data.forEach((user) => {
+            if(itemId === user.id) {
+                this.saveFile(this.data)
+                currentUser = (this.data)
             }
         })
         return currentUser
