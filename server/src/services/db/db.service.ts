@@ -86,6 +86,17 @@ export class DB {
         })
         return isDelete
     }
+
+    public detailsItem(itemId) {
+        let currentUser = "";
+        this.data.forEach((user) => {
+            if(itemId === user.id) {
+                this.saveFile(this.data)
+                currentUser = (this.data)
+            }
+        })
+        return currentUser
+    }
 }
 
 new DB('users', { unique: ['email', 'phone'] });
