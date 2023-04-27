@@ -11,11 +11,14 @@ const Users = () => {
   const [deleteModalActive, setDeleteModalActive] = useState(false);
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
+  const [totalNumbers, setTotalNumbers] = useState([]);
   const [selectedUser, setSelectedUser] = useState({
     userName: "",
     phoneNumber: "",
     email: "",
   });
+  
+  const pageSizes = [1, 2, 3, 4];
 
   const handleConfirmClick = () => {
     console.log(
@@ -66,6 +69,7 @@ const Users = () => {
     fetch(`http://localHost:3001/users?pageNumber=${pagination.pageNumber}&pageSize=${pagination.pageSize}`).then(res => res.json()).then(res => {
       if (res.data) {
         setUsers(res.data);
+        setTotalNumbers(res.total)
       }
     });
   }
@@ -95,7 +99,7 @@ const Users = () => {
         setActive={setDeleteModalActive}
         userDelete={handleUserDelete}
       />
-      <Pagination onChange={onPaginationChange} />
+      <Pagination onChange={onPaginationChange} pageSizes={pageSizes} itemsCount={totalNumbers} />
     </div>
   );
 };
