@@ -1,2 +1,2 @@
-import { DB } from "./db.service";
-export const usersDB = new DB("users", { unique: ["email", "phoneNumber"] });
+import { DBPagination } from "./db.pagination";
+export const usersDB = new DBPagination("users", { unique: ["email", "phoneNumber"] });
