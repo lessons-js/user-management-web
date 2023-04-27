@@ -3,7 +3,7 @@ import { useState } from 'react';
 export const Pagination = (props) => {
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(0);
-    const tp = Math.trunc(props.itemsCount / pageSize);
+    const tp = Math.ceil(props.itemsCount / pageSize);
 
     
 
@@ -17,6 +17,7 @@ export const Pagination = (props) => {
     const totalNumber = (event) => {
         setPageSize(Number(event.target.value));
         onChange({pageSize: event.target.value})
+        setPageNumber(0)
     }
     const next =  () => {
         if(tp !== pageNumber + 1) {
