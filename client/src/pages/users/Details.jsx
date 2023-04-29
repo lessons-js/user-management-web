@@ -1,11 +1,27 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Details() {
-    const { id } = useParams()
-    const selectedUser = "";
-    fetch(`localhost:3001/users/${id}`,{ method: 'POST', headers: { 'content-type': 'application/json' }}.then(res => res.json()).then(res => {
-        selectedUser(res.currentUser)
-      }))
+
+  const [user,setUser] = useState("");
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/users/getUserById/${id}`)
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      setUser(data)
+    })
+  }, [id]);
+
+  return(
+    <div className="Wrapper">
+      <div>{user.userName}</div>
+    </div>
+  )
 }
+
 
 export default Details;
