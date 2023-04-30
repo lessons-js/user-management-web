@@ -89,8 +89,8 @@ export class DB {
 
 
     public detailsItem(itemId) {
-        const findParams = this.data.find(u => u.id == itemId)
-        return findParams;
+        const searchUser = this.data.find(u => u.id == itemId)
+        return searchUser;
     }
 }
 

@@ -1,20 +1,26 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 
 function Details() {
 
-  const [user,setUser] = useState("");
+  const [user,setUser] = useState("")
   const { id } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch(`http://localhost:3001/users/getUserById/${id}`)
     .then(res => {
-      return res.json();
+      if(!res.ok) {
+        navigate('/users')
+      } 
+      return res.json()
     })
     .then(data => {
       setUser(data)
     })
-  }, [id]);
+  }, []);
+  
 
   return(
     <div className="Wrapper">
@@ -25,3 +31,5 @@ function Details() {
 
 
 export default Details;
+
+
