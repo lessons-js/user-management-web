@@ -101,9 +101,6 @@ const Users = () => {
         setActive={setDeleteModalActive}
         userDelete={handleUserDelete}
       />
-      <Details
-        user={selectedUser}
-      />
     </div>
   );
 };
