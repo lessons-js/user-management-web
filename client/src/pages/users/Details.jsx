@@ -2,26 +2,30 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../users/Details.scss";
 
-
-function Details() {
-
-  const [user,setUser] = useState("")
+function GetUserById(user,error){
   const { id } = useParams();
-  const [error,setError] = useState(false)
-
   useEffect(() => {
-    fetch(`http://localhost:3001/users/getUserById/${id}`)
+    fetch(process.env.REACT_APP_REQUEST + id)
     .then(res => {
       if(!res.ok) {
-        setError(true)
+        error(true)
       }
       return res.json()
     })
     .then(data => {
-      setUser(data)
+      user(data)
     })
   }, []);
   
+}
+
+function Details() {
+  
+  const [user,setUser] = useState("")
+  const [error,setError] = useState(false)
+
+  GetUserById(setUser,setError)
+
     return (
       <>
         {
