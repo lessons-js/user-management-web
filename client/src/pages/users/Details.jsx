@@ -8,12 +8,12 @@ function GetUserById(user,error){
     fetch(process.env.REACT_APP_REQUEST + id)
     .then(res => {
       if(!res.ok) {
-        error(true)
+        setError(true)
       }
       return res.json()
     })
     .then(data => {
-      user(data)
+      setUser(data)
     })
   }, []);
   
