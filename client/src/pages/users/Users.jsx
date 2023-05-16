@@ -3,12 +3,15 @@ import "../users/Users.scss";
 import UserModal from "../../components/modal/userModal";
 import UsersTable from "../../components/table/userTable";
 import DeleteModal from "../../components/modal/DeleteModal";
+import Details from "../users/Details"
+import { useNavigate } from "react-router-dom";
 import { validateName, validateEmail, validatePhone } from "../../validation/validation";
 
 const Users = () => {
   const [modalActive, setModalActive] = useState(false);
   const [deleteModalActive, setDeleteModalActive] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState({
     userName: "",
     phoneNumber: "",
@@ -60,6 +63,11 @@ const Users = () => {
     setSelectedUser(user);
     setDeleteModalActive(true);
   };
+  
+
+  const showUserDetails = (userId) => {
+    navigate(`/users/${userId}`)
+  }
 
   const handleUserDelete = (userId, user) => {
     setSelectedUser(user);
@@ -74,6 +82,7 @@ const Users = () => {
         users={users}
         onUserEdit={handleUserEdit}
         onUserDelete={OnUserDelete}
+        showUserDetails={showUserDetails}
         headers={headers}
       />
       <div className="app">

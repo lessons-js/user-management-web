@@ -86,6 +86,12 @@ export class DB {
         })
         return isDelete
     }
+
+
+    public detailsItem(itemId) {
+        const searchUser = this.data.find(u => u.id == itemId)
+        return searchUser;
+    }
 }
 
 new DB('users', { unique: ['email', 'phone'] });
